@@ -1,4 +1,4 @@
-package br.com.pedidos_api.entity.cliente;
+package br.com.pedidos_api.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +15,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Cliente {
+@Entity(name = "cliente")
+public class ClienteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
