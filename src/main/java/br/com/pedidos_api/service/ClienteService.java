@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +18,21 @@ public class ClienteService {
     private final ClienteRepository repository;
     private final ClienteMapper mapper;
 
-    public ClienteResponse criarCliente(ClienteRequest request) {
-        ClienteEntity cliente = mapper.toEntity(request);
+    public ClienteResponse criarCliente(final ClienteRequest request) {
+        final ClienteEntity cliente = mapper.toEntity(request);
         return mapper.toResponse(repository.save(cliente));
     }
 
     public List<ClienteResponse> listarClientes() {
-        List<ClienteEntity> clientes = repository.findAll();
+        final List<ClienteEntity> clientes = repository.findAll();
         return clientes.stream()
                 .map(mapper::toResponse)
                 .toList();
+    }
+
+    public ClienteResponse buscarClientePorId(final UUID idCliente) {
+        final ClienteEntity cliente = repository.findById(idCliente)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        return mapper.toResponse(cliente);
     }
 }
