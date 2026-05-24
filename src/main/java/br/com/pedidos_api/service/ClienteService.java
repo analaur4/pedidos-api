@@ -35,4 +35,17 @@ public class ClienteService {
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         return mapper.toResponse(cliente);
     }
+
+    public ClienteResponse atualizarCliente(final UUID idCliente, final ClienteRequest request) {
+        repository.findById(idCliente).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        final ClienteEntity clienteEntity = ClienteEntity.builder()
+                .id(idCliente)
+                .nome(request.getNome())
+                .email(request.getEmail())
+                .telefone(request.getTelefone())
+                .cpf(request.getCpf())
+                .build();
+        repository.save(clienteEntity);
+        return mapper.toResponse(clienteEntity);
+    }
 }
