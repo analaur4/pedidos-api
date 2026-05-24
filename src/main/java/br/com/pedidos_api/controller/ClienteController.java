@@ -3,6 +3,7 @@ package br.com.pedidos_api.controller;
 import br.com.pedidos_api.dto.cliente.ClienteRequest;
 import br.com.pedidos_api.dto.cliente.ClienteResponse;
 import br.com.pedidos_api.service.ClienteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +28,7 @@ public class ClienteController {
     private final ClienteService service;
 
     @PostMapping
-    public ResponseEntity<ClienteResponse> criarCliente(@RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponse> criarCliente(@RequestBody @Valid ClienteRequest request) {
         ClienteResponse response = service.criarCliente(request);
         return ResponseEntity.status(201).body(response);
     }
@@ -43,7 +44,7 @@ public class ClienteController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ClienteResponse> atualizarCliente(@PathVariable UUID id, @RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponse> atualizarCliente(@PathVariable UUID id, @RequestBody @Valid ClienteRequest request) {
         return ResponseEntity.ok(service.atualizarCliente(id, request));
     }
 
