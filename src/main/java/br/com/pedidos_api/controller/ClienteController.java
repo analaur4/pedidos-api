@@ -5,10 +5,13 @@ import br.com.pedidos_api.dto.cliente.ClienteResponse;
 import br.com.pedidos_api.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +24,10 @@ public class ClienteController {
     public ResponseEntity<ClienteResponse> criarCliente(@RequestBody ClienteRequest request) {
         ClienteResponse response = service.criarCliente(request);
         return ResponseEntity.status(201).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClienteResponse>> listarClientes() {
+        return ResponseEntity.ok(service.listarClientes());
     }
 }

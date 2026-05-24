@@ -8,6 +8,8 @@ import br.com.pedidos_api.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ClienteService {
@@ -18,5 +20,12 @@ public class ClienteService {
     public ClienteResponse criarCliente(ClienteRequest request) {
         ClienteEntity cliente = mapper.toEntity(request);
         return mapper.toResponse(repository.save(cliente));
+    }
+
+    public List<ClienteResponse> listarClientes() {
+        List<ClienteEntity> clientes = repository.findAll();
+        return clientes.stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 }
