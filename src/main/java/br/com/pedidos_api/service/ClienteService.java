@@ -48,4 +48,9 @@ public class ClienteService {
         repository.save(clienteEntity);
         return mapper.toResponse(clienteEntity);
     }
+
+    public void deletarCliente(final UUID idCliente) {
+        repository.findById(idCliente).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        repository.deleteById(idCliente);
+    }
 }

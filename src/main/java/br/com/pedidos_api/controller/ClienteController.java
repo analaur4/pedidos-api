@@ -5,6 +5,7 @@ import br.com.pedidos_api.dto.cliente.ClienteResponse;
 import br.com.pedidos_api.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,5 +45,11 @@ public class ClienteController {
     @PatchMapping("/{id}")
     public ResponseEntity<ClienteResponse> atualizarCliente(@PathVariable UUID id, @RequestBody ClienteRequest request) {
         return ResponseEntity.ok(service.atualizarCliente(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarCliente(@PathVariable UUID id) {
+        service.deletarCliente(id);
+        return ResponseEntity.noContent().build();
     }
 }
