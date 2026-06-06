@@ -46,7 +46,7 @@ public class ProdutoController {
         return ResponseEntity.ok(service.atualizarProduto(id, request));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/status")
     public ResponseEntity<ProdutoResponse> atualizarStatusProduto(@PathVariable UUID id) {
         return ResponseEntity.ok(service.atualizarStatusProduto(id));
     }
