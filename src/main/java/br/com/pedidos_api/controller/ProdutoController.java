@@ -6,6 +6,7 @@ import br.com.pedidos_api.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,5 +37,10 @@ public class ProdutoController {
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponse> buscarProdutoPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(service.buscarProdutoPorId(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProdutoResponse> atualizarProduto(@PathVariable UUID id, @RequestBody ProdutoRequest request) {
+        return ResponseEntity.ok(service.atualizarProduto(id, request));
     }
 }

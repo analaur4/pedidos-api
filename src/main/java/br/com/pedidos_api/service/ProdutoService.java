@@ -36,4 +36,16 @@ public class ProdutoService {
         return mapper.toResponse(produto);
     }
 
+    public ProdutoResponse atualizarProduto(final UUID idProduto, final ProdutoRequest request) {
+        repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        final ProdutoEntity produtoEntity = ProdutoEntity.builder()
+                .id(idProduto)
+                .nome(request.getNome())
+                .descricao(request.getDescricao())
+                .preco(request.getPreco())
+                .ativo(request.getAtivo())
+                .build();
+        repository.save(produtoEntity);
+        return mapper.toResponse(produtoEntity);
+    }
 }
