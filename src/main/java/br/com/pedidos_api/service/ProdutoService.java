@@ -1,0 +1,23 @@
+package br.com.pedidos_api.service;
+
+import br.com.pedidos_api.dto.produto.ProdutoRequest;
+import br.com.pedidos_api.dto.produto.ProdutoResponse;
+import br.com.pedidos_api.entity.ProdutoEntity;
+import br.com.pedidos_api.mapper.ProdutoMapper;
+import br.com.pedidos_api.repository.ProdutoRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class ProdutoService {
+
+    private final ProdutoRepository repository;
+    private final ProdutoMapper mapper;
+
+    public ProdutoResponse criarPoduto(ProdutoRequest request) {
+        final ProdutoEntity entity = mapper.toEntity(request);
+        return mapper.toResponse(repository.save(entity));
+    }
+
+}
