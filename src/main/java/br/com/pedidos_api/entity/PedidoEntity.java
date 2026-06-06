@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class PedidoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private LocalDate dataCriacao;
+    private LocalDateTime dataCriacao;
     private StatusPedidoEnum status;
     private BigDecimal valorTotal;
     @ManyToOne
