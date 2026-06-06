@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum StatusPedidoEnum {
 
     EM_PROCESSAMENTO,
+    PEDIDO_CRIADO,
     CONCLUIDO,
     CANCELADO;
 
