@@ -48,4 +48,9 @@ public class ProdutoService {
         repository.save(produtoEntity);
         return mapper.toResponse(produtoEntity);
     }
+
+    public void deletarProduto(final UUID idProduto) {
+        repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        repository.deleteById(idProduto);
+    }
 }

@@ -5,6 +5,7 @@ import br.com.pedidos_api.dto.produto.ProdutoResponse;
 import br.com.pedidos_api.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,4 +44,11 @@ public class ProdutoController {
     public ResponseEntity<ProdutoResponse> atualizarProduto(@PathVariable UUID id, @RequestBody ProdutoRequest request) {
         return ResponseEntity.ok(service.atualizarProduto(id, request));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarProduto(@PathVariable UUID id) {
+        service.deletarProduto(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
