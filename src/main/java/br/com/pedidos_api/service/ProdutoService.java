@@ -37,20 +37,37 @@ public class ProdutoService {
     }
 
     public ProdutoResponse atualizarProduto(final UUID idProduto, final ProdutoRequest request) {
-        repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-        final ProdutoEntity produtoEntity = ProdutoEntity.builder()
-                .id(idProduto)
-                .nome(request.getNome())
-                .descricao(request.getDescricao())
-                .preco(request.getPreco())
-                .ativo(request.getAtivo())
-                .build();
-        repository.save(produtoEntity);
-        return mapper.toResponse(produtoEntity);
+        ProdutoEntity entity = repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        if(entity.getAtivo()) {
+            entity = ProdutoEntity.builder()
+                    .id(idProduto)
+                    .nome(request.getNome())
+                    .descricao(request.getDescricao())
+                    .preco(request.getPreco())
+                    .ativo(request.getAtivo())
+                    .build();
+            repository.save(entity);
+            return mapper.toResponse(entity);
+
+        } else {
+            throw new RuntimeException("Produto inativo, não é possível atualizar");
+        }
+    }
+
+    public ProdutoResponse atualizarStatusProduto(final UUID idProduto) {
+        ProdutoEntity entity = repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        entity.setAtivo(!entity.getAtivo());
+
+        return mapper.toResponse(repository.save(entity));
     }
 
     public void deletarProduto(final UUID idProduto) {
-        repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-        repository.deleteById(idProduto);
+        final ProdutoEntity entity = repository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        if(entity.getAtivo()) {
+            throw new RuntimeException("Produto ativo, não é possível deletar");
+        } else {
+            repository.deleteById(idProduto);
+        }
     }
 }
