@@ -29,7 +29,9 @@ public class PedidoService {
     public PedidoResponse criarPedido(final PedidoRequest request) {
         final ClienteEntity clienteEntity = clienteRepository.findById(request.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-        final List<ProdutoEntity> produtoEntityList = produtoRepository.findAllById(request.getProdutoIds());
+        final List<ProdutoEntity> produtoEntityList = produtoRepository.findAllById(request.getProdutosIds())
+                .stream()
+                .toList();
         if (produtoEntityList.isEmpty()) {
             throw new RuntimeException("Nenhum produto encontrado");
         }
