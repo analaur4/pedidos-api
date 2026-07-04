@@ -47,6 +47,13 @@ public class PedidoService {
         return mapper.toResponse(repository.save(entity));
     }
 
+    public List<PedidoResponse> listarPedidos() {
+        final List<PedidoEntity> pedidos = repository.findAll();
+        return pedidos.stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
+
     private BigDecimal calcularValorTotal(final List<ProdutoEntity> produtos) {
         return produtos.stream()
                 .map(ProdutoEntity::getPreco)
