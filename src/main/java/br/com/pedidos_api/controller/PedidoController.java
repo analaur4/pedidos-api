@@ -6,12 +6,14 @@ import br.com.pedidos_api.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,5 +31,10 @@ public class PedidoController {
     @GetMapping
     public ResponseEntity<List<PedidoResponse>> listarPedidos() {
         return ResponseEntity.ok(service.listarPedidos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoResponse> buscarPedidoPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.buscarPedidoPorId(id));
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,12 @@ public class PedidoService {
         return pedidos.stream()
                 .map(mapper::toResponse)
                 .toList();
+    }
+
+    public PedidoResponse buscarPedidoPorId(final UUID pedidoId) {
+        final PedidoEntity entity = repository.findById(pedidoId)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+        return mapper.toResponse(entity);
     }
 
     private BigDecimal calcularValorTotal(final List<ProdutoEntity> produtos) {
