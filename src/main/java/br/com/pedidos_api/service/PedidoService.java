@@ -61,9 +61,29 @@ public class PedidoService {
         return mapper.toResponse(entity);
     }
 
+    public PedidoResponse atualizarStatusPedido(final UUID idPedido, final PedidoRequest pedidoRequest) {
+        PedidoEntity pedidoEntity = repository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
+        podeAtualizarPedido(pedidoEntity);
+
+        pedidoEntity = PedidoEntity.builder()
+                .status(pedidoRequest.getStatus())
+                .build();
+
+        return mapper.toResponse(pedidoEntity);
+    }
+
+
     private BigDecimal calcularValorTotal(final List<ProdutoEntity> produtos) {
         return produtos.stream()
                 .map(ProdutoEntity::getPreco)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private boolean podeAtualizarPedido(final PedidoEntity entity) {
+        if (entity.getStatus().equals(StatusPedidoEnum.CANCELADO) || entity.getStatus().equals(StatusPedidoEnum.CONCLUIDO))
+                throw new RuntimeException("Produto não pode ser atualizado");
+        return true;
     }
 }
