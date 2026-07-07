@@ -74,6 +74,15 @@ public class PedidoService {
         return mapper.toResponse(pedidoEntity);
     }
 
+    public void deletarPedido(final UUID idPedido) {
+        final PedidoEntity entity = repository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+        if (entity.getStatus().equals(StatusPedidoEnum.CONCLUIDO)) {
+            throw new RuntimeException("Pedido não pode ser deletado");
+        } else {
+            repository.delete(entity);
+        }
+    }
 
     private BigDecimal calcularValorTotal(final List<ProdutoEntity> produtos) {
         return produtos.stream()
